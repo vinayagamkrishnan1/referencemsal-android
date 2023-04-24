@@ -1,0 +1,78 @@
+/*
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
+
+apply plugin: 'com.android.application'
+/*
+ * Apply the MAM SDK plugin to this project. This will perform Intune class replacements automatically, see
+ * https://docs.microsoft.com/en-us/intune/app-sdk-android#replace-classes-methods-and-activities-with-their-mam-equivalent
+ * for more information.
+ */
+apply plugin: 'com.microsoft.intune.mam'
+
+android {
+    compileSdkVersion 33
+    defaultConfig {
+        applicationId "com.eygsl.cbs.referencemsal"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 6
+        versionName "1.5"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lint {
+        disable 'GoogleAppIndexingWarning'
+    }
+    namespace 'com.eygsl.cbs.referencemsal'
+}
+
+dependencies {
+    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation "com.google.android.material:material:1.2.1"
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.gms:play-services-vision:20.1.3'
+
+    def lifecycle_version = '2.2.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+
+    def room_version = '2.2.5'
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'com.android.volley:volley:1.2.1'
+
+    dependencies {
+        def appCenterSdkVersion = '4.4.5'
+        implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+        implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+    }
+
+    // Include the MAM SDK
+    implementation files('MAMSDK/Microsoft.Intune.MAM.SDK.aar')
+
+    // Include MSAL
+    implementation 'com.microsoft.identity.client:msal:1.5.5'
+}
+
+intunemam {
+    includeExternalLibraries = [
+            "androidx.*"
+    ]
+}

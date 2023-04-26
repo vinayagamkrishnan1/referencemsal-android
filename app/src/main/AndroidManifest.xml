@@ -1,81 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <queries>
-        <package android:name="com.microsoft.emmx" />
-        <package android:name="com.microsoft.authenticator" />
-        <package android:name="com.azure.authenticator" />
-    </queries>
-    <permission android:name="android.permission.QUERY_ALL_PACKAGES" />
-
-    <!-- Required permissions -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <!-- The backupAgent here is provided by the MAM SDK. It will block/encrypt backups if necessary. -->
     <application
         android:allowBackup="true"
-        android:fullBackupOnly="true"
-        android:fullBackupContent="true"
-        android:backupAgent="com.microsoft.intune.mam.client.app.backup.MAMDefaultBackupAgent"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="com.eygsl.cbs.referencemsal.helpers.IntuneSDKTaskRunner">
-
+        android:theme="@style/Theme.Referencemsal"
+        tools:targetApi="31">
         <activity
-            android:exported="true"
-            android:name="com.eygsl.cbs.referencemsal.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:exported="false" android:name="com.eygsl.cbs.referencemsal.DocumentsScreenActivity" android:parentActivityName="com.eygsl.cbs.referencemsal.MainActivity" />
-        <activity android:exported="false" android:name="com.eygsl.cbs.referencemsal.FAQScreenActivity" android:parentActivityName="com.eygsl.cbs.referencemsal.MainActivity" />
-        <activity android:exported="false" android:name="com.eygsl.cbs.referencemsal.AppinfoScreenActivity" android:parentActivityName="com.eygsl.cbs.referencemsal.MainActivity" />
-        <activity android:exported="false" android:name="com.eygsl.cbs.referencemsal.SupportScreenActivity" android:parentActivityName="com.eygsl.cbs.referencemsal.MainActivity" />
-        <activity android:exported="false" android:name="com.eygsl.cbs.referencemsal.SharePointItemDetail" android:parentActivityName="com.eygsl.cbs.referencemsal.SharepointList" />
-        <activity android:exported="false" android:name="com.eygsl.cbs.referencemsal.SharepointList" android:parentActivityName="com.eygsl.cbs.referencemsal.MainActivity" />
-        <activity android:exported="false" android:name="com.eygsl.cbs.referencemsal.ScanQRcodeActivity" android:parentActivityName="com.eygsl.cbs.referencemsal.MainActivity" />
-        <activity android:exported="false" android:name="com.eygsl.cbs.referencemsal.WebViewBrowser" />
-        <activity android:exported="false" android:name="com.eygsl.cbs.referencemsal.ProfileScreenActivity" android:parentActivityName="com.eygsl.cbs.referencemsal.MainActivity" />
-
-        <!-- Must be specified to allow users to login via MSAL -->
-        <activity android:exported="true" android:name="com.microsoft.identity.client.BrowserTabActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:host="com.eygsl.cbs.referencemsal"
-                    android:path="/pKLmhyA0HEMLOig6q6sLrvpEOUI="
-                    android:scheme="msauth" />
-            </intent-filter>
-        </activity>
-
-        <receiver android:exported="true" android:name="com.microsoft.intune.mam.client.service.MAMBackgroundReceiver"
-            tools:ignore="Instantiatable">
-
-        </receiver>
-
-        <provider
-            android:authorities="com.eygsl.cbs.referencemsal.utils.CustomFileProvider"
-            android:name="androidx.core.content.FileProvider"
-            android:grantUriPermissions="true"
-            android:exported="false">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
     </application>
 
 </manifest>

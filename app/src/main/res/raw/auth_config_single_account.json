@@ -1,0 +1,13 @@
+{
+  "client_id" : "5b984ca0-0ed8-4f43-9834-a85048967435",
+  "authorization_user_agent" : "DEFAULT",
+  "redirect_uri" : "msauth://com.eygsl.cbs.referencemsal/pKLmhyA0HEMLOig6q6sLrvpEOUI%3D",
+  "account_mode" : "SINGLE",
+  "broker_redirect_uri_registered": true,
+  "authorities" : [
+    {
+      "type": "AAD",
+      "authority_url": "https://login.microsoftonline.com/eygs.onmicrosoft.com/"
+    }
+  ]
+}

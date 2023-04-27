@@ -1,0 +1,96 @@
+# Android
+# Build your Android project with Gradle.
+# Add steps that test, sign, and distribute the APK, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/android
+
+trigger:
+- main
+
+variables:
+  - group: AndroidSignInVariables
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: JavaToolInstaller@0
+  displayName: 'Use Java 11'
+  inputs:
+    versionSpec: 11
+    jdkArchitectureOption: x64
+    jdkSourceOption: PreInstalled
+
+- task: Gradle@3
+  displayName: 'Build APK'
+  inputs:    
+    gradleWrapperFile: 'gradlew'
+    workingDirectory: ''
+    options: '-PversionName=$(NEW_VERSION)-PversionCode=$(Build.BuildId)'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    gradleOptions: '-Xmx3072m'
+    sonarQubeRunAnalysis: false
+    tasks: 'assembleRelease'
+
+
+# - task: AndroidSigning@3
+#   displayName: 'Sign APK'
+#   inputs:
+#     #apkFiles: '**/*.apk'
+#     apkFiles: '$(Build.ArtifactStagingDirectory)/*.apk'
+#     apksignerKeystoreFile: 'MobileServicesKS.keystore'
+#     apksignerKeystorePassword: '$(AndroidKeyStorePassword)'
+#     apksignerKeystoreAlias: '$(AndroidKeyAlias)'
+#     apksignerKeyPassword: '$(AndroidKeyAliasPassword)'
+#     zipalign: true
+
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: '**/*.apk' 
+    apksign: true
+    apksignerKeystoreFile: 'MobileServicesKS.keystore'
+    apksignerKeystorePassword: '$(AndroidKeyStorePassword)'
+    apksignerKeystoreAlias: '$(AndroidKeyAlias)'
+    apksignerKeyPassword: '$(AndroidKeyAliasPassword)'
+    apksignerArguments: '--out $(Build.SourcesDirectory)/app/build/outputs/apk/release/app.release.apk'
+    zipalign: true
+
+# - task: PublishBuildArtifacts@1
+#   displayName: 'Publish APK to artifacts 3'
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)/**/*.apk'
+#     ArtifactName: 'android'
+#     publishLocation: 'Container'
+
+# - task: PublishBuildArtifacts@1
+#   displayName: 'Publish APK to artifacts 2'
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)/**/*.apk'
+#     ArtifactName: 'android'
+#     publishLocation: 'Container'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: $(Build.SourcesDirectory)
+    contents: '**/*.release.apk'
+    targetFolder: '$(build.artifactStagingDirectory)'
+    overWrite: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)/app/build/outputs/apk/release/'
+    artifactName: 'apks' 
+    publishLocation: 'container'
+
+- task: AppCenterDistribute@3
+  displayName: 'Distribute APK to Visual Studio App Center'
+  inputs:
+    # serverEndpoint: 'ReferenceMSAL-SC'
+    # appSlug: 'EYMobileAppService/referencemsal-android-cicd'
+    serverEndpoint: 'MSP-Account-SC'
+    appSlug: 'A1247671-MSP01-ey.net/referencemsal-android-cicd'
+    appFile: '$(Build.SourcesDirectory)/app/build/outputs/apk/release/app.release.apk'
+    symbolsIncludeParentDirectory: false
+    releaseNotesInput: 'First distribution through Appcenter'
+    isSilent: false

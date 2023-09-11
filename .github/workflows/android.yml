@@ -35,12 +35,6 @@ jobs:
 
     - name: Build with Gradle and APK
       run: ./gradlew assembleRelease
-
-    - name: Upload APK
-      uses: actions/upload-artifact@v2
-      with:
-        name: app-release
-        path: app/build/outputs/apk/release/*.apk
     
     - name: Sign APK
       id: sign_apk
@@ -50,6 +44,10 @@ jobs:
         signingKeyBase64: ${{ secrets.SIGNING_KEYSTORE }}
         alias: ${{ secrets.SIGNING_ALIAS }}
         keyStorePassword: ${{ secrets.SIGNING_KEYSTORE_PASSWORD }}
-        keyPassword: ${{ secrets.SIGNING_ALIAS_PASSWORD }}  
-
-    - run: echo "Build status report=${{ job.status }}."
+        keyPassword: ${{ secrets.SIGNING_ALIAS_PASSWORD }} 
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-release
+        path: app/build/outputs/apk/release/*.apk

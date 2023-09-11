@@ -28,17 +28,17 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('../keystore/MobileServicesKS.keystore')
-            storePassword 'EY_MAS-2020'
-            keyAlias 'eyMobile'
-            keyPassword 'eutxMAM'
+            // storeFile file('../keystore/MobileServicesKS.keystore')
+            // storePassword 'EY_MAS-2020'
+            // keyAlias 'eyMobile'
+            // keyPassword 'eutxMAM'
         }
     }
     buildTypes {
         release {
-            signingConfig signingConfigs.release
-            minifyEnabled true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // signingConfig signingConfigs.release
+            // minifyEnabled true
+            // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

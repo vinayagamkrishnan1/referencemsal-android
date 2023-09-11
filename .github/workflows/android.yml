@@ -1,0 +1,43 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "referencemsal-android-dev" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt' # You can use 'adopt', 'openjdk', 'zulu', etc. as per your preference
+        java-package: 'jdk'
+        architecture: 'x64'
+        check-latest: false
+        server-id: 'github'
+        server-username: ${{ github.actor }}
+        server-password: ${{ secrets.GITHUB_TOKEN }}
+        overwrite-settings: true
+        job-status: 'success'
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle and APK
+      run: ./gradlew assembleRelease
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-release
+        path: app/build/outputs/apk/release/*.apk

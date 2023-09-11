@@ -39,12 +39,13 @@ import java.util.concurrent.ExecutionException;
 public class DocumentsScreenActivity extends AppCompatActivity implements
         DocumentsAdapter.customButtonListener {
 
+    static String EDGEBROWSERPACKAGE = "com.microsoft.emmx";
     BottomSheetDialog mBottomDialogNotificationAction;
     View sheetView;
     LinearLayout openDocument;
     LinearLayout saveOrShareDocument;
     LinearLayout closeActionSheet;
-    TextView textViewSaveOrShare, errorMessage;
+    TextView textViewSaveOrShare;
     DownloadManager downloadManager;
     public static String documentPath;
 
@@ -60,11 +61,11 @@ public class DocumentsScreenActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_documents_screen);
         setTitle("Documents");
 
-        errorMessage = (TextView)findViewById(R.id.txt_view_message);
         listView = (ListView)findViewById(R.id.documentslist);
         dataModels = new ArrayList<>();
         adapter = new DocumentsAdapter(dataModels, getApplicationContext());
         adapter.setCustomButtonListner((DocumentsAdapter.customButtonListener) DocumentsScreenActivity.this);
+
         listView.setAdapter(adapter);
         this.fetchFiles();
     }
@@ -134,7 +135,6 @@ public class DocumentsScreenActivity extends AppCompatActivity implements
         }
         catch (ExecutionException | InterruptedException | JSONException ei) {
             Log.d("ERROR::::", ei.toString());
-            errorMessage.setVisibility(View.VISIBLE);
             ei.printStackTrace();
         }
     }

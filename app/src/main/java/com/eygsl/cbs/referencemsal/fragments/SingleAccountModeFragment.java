@@ -36,7 +36,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.eygsl.cbs.referencemsal.R;
-import com.eygsl.cbs.referencemsal.BuildConfig;
+import com.microsoft.identity.msal.BuildConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:text="Application Version:"
+        android:text="@string/welcome_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#3f3f3f"
         android:textSize="50px" />
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
-        android:text="MSAL Version:"
+        android:text="@string/user_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#3f3f3f"
         android:textSize="50px" />
@@ -34,20 +34,20 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
-        android:text="Intune SDK Version:"
+        android:text="@string/family_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#3f3f3f"
         android:textSize="50px" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/textview_appcenterversion"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginLeft="20dp"-->
-    <!--        android:layout_marginTop="35dp"-->
-    <!--        android:text="Appcenter SDK Version:"-->
-    <!--        android:textAppearance="@style/TextAppearance.AppCompat.Body2"-->
-    <!--        android:textColor="#3f3f3f"-->
-    <!--        android:textSize="50px" />-->
+    <TextView
+        android:id="@+id/textview_appcenterversion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="35dp"
+        android:text="@string/displayable_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#3f3f3f"
+        android:textSize="50px" />
 
 </LinearLayout>

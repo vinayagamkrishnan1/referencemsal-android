@@ -3,6 +3,11 @@
 # Add steps that test, sign, and distribute the APK, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/android
 
+# Android
+# Build your Android project with Gradle.
+# Add steps that test, sign, and distribute the APK, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/android
+
 trigger:
 - main
 
@@ -83,14 +88,14 @@ steps:
     artifactName: 'apks' 
     publishLocation: 'container'
 
-- task: AppCenterDistribute@3
-  displayName: 'Distribute APK to Visual Studio App Center'
-  inputs:
-    # serverEndpoint: 'ReferenceMSAL-SC'
-    # appSlug: 'EYMobileAppService/referencemsal-android-cicd'
-    serverEndpoint: 'MSP-Account-SC'
-    appSlug: 'A1247671-MSP01-ey.net/referencemsal-android-cicd'
-    appFile: '$(Build.SourcesDirectory)/app/build/outputs/apk/release/app.release.apk'
-    symbolsIncludeParentDirectory: false
-    releaseNotesInput: 'First distribution through Appcenter'
-    isSilent: false
+# - task: AppCenterDistribute@3
+#   displayName: 'Distribute APK to Visual Studio App Center'
+#   inputs:
+#     # serverEndpoint: 'ReferenceMSAL-SC'
+#     # appSlug: 'EYMobileAppService/referencemsal-android-cicd'
+#     serverEndpoint: 'MSP-Account-SC'
+#     appSlug: 'A1247671-MSP01-ey.net/referencemsal-android-cicd'
+#     appFile: '$(Build.SourcesDirectory)/app/build/outputs/apk/release/app.release.apk'
+#     symbolsIncludeParentDirectory: false
+#     releaseNotesInput: 'First distribution through Appcenter'
+#     isSilent: false

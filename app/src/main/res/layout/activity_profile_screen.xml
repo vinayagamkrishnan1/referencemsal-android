@@ -1,152 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileScreenActivity">
-
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="1">
-        <TableRow
-            android:padding="10dp">
-            <TextView
-                android:text="Display Name:"
-                android:textFontWeight="700"
-                android:padding="3dip" />
-            <TextView
-                android:id="@+id/profile_displayName"
-                android:gravity="left"
-                android:padding="3dip" />
-        </TableRow>
-        <View
-            android:layout_height="1dip"
-            android:background="#FF909090" />
-        <TableRow
-            android:padding="10dp">
-            <TextView
-                android:text="Mobile Number:"
-                android:textFontWeight="700"
-                android:padding="3dip" />
-            <TextView
-                android:id="@+id/profile_mobileNumber"
-                android:gravity="left"
-                android:padding="3dip" />
-        </TableRow>
-        <View
-            android:layout_height="1dip"
-            android:background="#FF909090" />
-        <TableRow
-            android:padding="10dp">
-            <TextView
-                android:text="Job Title:"
-                android:textFontWeight="700"
-                android:padding="3dip" />
-            <TextView
-                android:id="@+id/profile_jobTitle"
-                android:gravity="left"
-                android:padding="3dip" />
-        </TableRow>
-        <View
-            android:layout_height="1dip"
-            android:background="#FF909090" />
-        <TableRow
-            android:padding="10dp">
-            <TextView
-                android:text="Email:"
-                android:textFontWeight="700"
-                android:padding="3dip" />
-            <TextView
-                android:id="@+id/profile_mail"
-                android:gravity="left"
-                android:padding="3dip" />
-        </TableRow>
-        <View
-            android:layout_height="1dip"
-            android:background="#FF909090" />
-        <TableRow
-            android:padding="10dp">
-            <TextView
-                android:text="Employee ID:"
-                android:textFontWeight="700"
-                android:padding="3dip" />
-            <TextView
-                android:id="@+id/profile_employeeID"
-                android:gravity="left"
-                android:padding="3dip" />
-        </TableRow>
-        <View
-            android:layout_height="1dip"
-            android:background="#FF909090" />
-        <TableRow
-            android:padding="10dp">
-            <TextView
-                android:text="Given Name:"
-                android:textFontWeight="700"
-                android:padding="3dip" />
-            <TextView
-                android:id="@+id/profile_givenName"
-                android:gravity="left"
-                android:padding="3dip" />
-        </TableRow>
-        <View
-            android:layout_height="1dip"
-            android:background="#FF909090" />
-        <TableRow
-            android:padding="10dp">
-            <TextView
-                android:text="Office Location:"
-                android:textFontWeight="700"
-                android:padding="3dip" />
-            <TextView
-                android:id="@+id/profile_officeLocation"
-                android:gravity="left"
-                android:padding="3dip" />
-        </TableRow>
-        <View
-            android:layout_height="1dip"
-            android:background="#FF909090" />
-        <TableRow
-            android:padding="10dp">
-            <TextView
-                android:text="Business Phone:"
-                android:textFontWeight="700"
-                android:padding="3dip" />
-            <TextView
-                android:id="@+id/profile_businessPhones"
-                android:gravity="left"
-                android:padding="3dip" />
-        </TableRow>
-        <View
-            android:layout_height="1dip"
-            android:background="#FF909090" />
-        <TableRow
-            android:padding="10dp">
-            <TextView
-                android:text="Principal Name:"
-                android:textFontWeight="700"
-                android:padding="3dip" />
-            <TextView
-                android:id="@+id/profile_userPrincipalName"
-                android:gravity="left"
-                android:padding="3dip" />
-        </TableRow>
-        <View
-            android:layout_height="1dip"
-            android:background="#FF909090" />
-    </TableLayout>
+    android:layout_weight="1"
+    android:paddingLeft="20dp"
+    android:paddingRight="10dp"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txt_view_message"
+        android:id="@+id/profile_displayName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No user data available."
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="18dp"
+        android:text="@string/profile_displayName"
+        android:visibility="visible"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/profile_mobileNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/profile_mobileNumber"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/profile_jobTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/profile_jobTitle"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/profile_mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/profile_mail"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/profile_employeeID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/profile_employeeID"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
+
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/profile_givenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/profile_givenName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
+
+    <View
+        android:id="@+id/divider6"
+        android:layout_width="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/profile_officeLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/profile_officeLocation"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
+
+
+    <View
+        android:id="@+id/divider7"
+        android:layout_width="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/profile_businessPhones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/profile_businessPhones"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
+
+    <View
+        android:id="@+id/divider8"
+        android:layout_width="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+
+    <TextView
+        android:id="@+id/profile_preferredLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/profile_preferredLanguage"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
+
+    <View
+        android:id="@+id/divider10"
+        android:layout_width="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+
+    <TextView
+        android:id="@+id/profile_context"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/profile_context"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
+
+
+    <View
+        android:id="@+id/divider11"
+        android:layout_width="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+
+    <TextView
+        android:id="@+id/profile_userPrincipalName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/profile_userPrincipalName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
+
+    <View
+        android:id="@+id/divider12"
+        android:layout_width="match_parent"
+        android:layout_marginTop="13dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+
+    <TextView
+        android:id="@+id/profile_surname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="@string/profile_surname"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3f3f3f"
+        android:textSize="60px" />
+
+</LinearLayout>

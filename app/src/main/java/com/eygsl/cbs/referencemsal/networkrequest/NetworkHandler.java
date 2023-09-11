@@ -54,7 +54,6 @@ public class NetworkHandler extends AsyncTask<String, String, String> {
                 line = reader.readLine();
                 bufferData = bufferData + line;
             }
-            Log.d("BUFFERED_DATA:", bufferData.toString());
         } catch( Exception e) {
             Log.d("ERROR WHILE GET DATA::", e.toString());
             e.printStackTrace();

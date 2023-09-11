@@ -1,20 +1,18 @@
 {
-  "version": 3,
+  "version": 2,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "com.eygsl.cbs.referencemsal",
-  "variantName": "release",
+  "variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "attributes": [],
-      "versionCode": 6,
-      "versionName": "1.5",
+      "versionCode": 5,
+      "versionName": "1.4",
       "outputFile": "app-release.apk"
     }
-  ],
-  "elementType": "File"
+  ]
 }

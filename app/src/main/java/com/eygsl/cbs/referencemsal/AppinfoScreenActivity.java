@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.eygsl.cbs.referencemsal.BuildConfig;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,18 +18,19 @@ public class AppinfoScreenActivity extends AppCompatActivity {
         TextView textViewAppVersion = (TextView) findViewById(R.id.textview_applicationversion);
         TextView textViewADALVersion = (TextView) findViewById(R.id.textview_adalversion);
         TextView textViewIntuneVersion = (TextView) findViewById(R.id.textview_intunesdkversion);
-        // TextView textViewAppcenterVersion = (TextView) findViewById(R.id.textview_appcenterversion);
+        TextView textViewAppcenterVersion = (TextView) findViewById(R.id.textview_appcenterversion);
 
         textViewAppVersion.setText("Application Version: " + BuildConfig.VERSION_NAME );
         textViewADALVersion.setText("MSAL Version: " + com.microsoft.identity.msal.BuildConfig.VERSION_NAME);
-        textViewIntuneVersion.setText("Intune SDK Version: " + com.microsoft.intune.mam.BuildConfig.VERSION_NAME);
-        // textViewAppcenterVersion.setText("Appcenter SDK Version: " + com.microsoft.appcenter.BuildConfig.VERSION_NAME);
+        // textViewIntuneVersion.setText("Intune SDK Version: " + com.microsoft.intune.mam.BuildConfig.VERSION_NAME);
+        // textViewAppcenterVersion.setText("AppCenter Version: " + com.microsoft.appcenter.BuildConfig.VERSION_NAME);
 
         Map<String, String> properties = new HashMap<>();
         properties.put("App version", BuildConfig.VERSION_NAME);
         properties.put("ADAL Version", com.microsoft.identity.msal.BuildConfig.VERSION_NAME);
         // properties.put("Intune SDK Version", com.microsoft.intune.mam.BuildConfig.VERSION_NAME);
         //properties.put("AppCenter Version", com.microsoft.appcenter.BuildConfig.VERSION_NAME);
+
         //Analytics.trackEvent("App Info screen", properties);
 
     }

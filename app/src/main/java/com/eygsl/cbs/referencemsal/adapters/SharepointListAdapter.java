@@ -1,11 +1,15 @@
 package com.eygsl.cbs.referencemsal.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import com.eygsl.cbs.referencemsal.R;
 import com.eygsl.cbs.referencemsal.models.SharepointListItemModel;
@@ -15,59 +19,68 @@ import java.util.ArrayList;
 public class SharepointListAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<SharepointListItemModel> sharepointItemModelArrayList;
+    private ArrayList<SharepointListItemModel> tennisModelArrayList;
 
     public SharepointListAdapter(Context context, ArrayList<SharepointListItemModel> tennisModelArrayList) {
-        this.context = context;
-        this.sharepointItemModelArrayList = tennisModelArrayList;
+      this.context = context;
+      this.tennisModelArrayList = tennisModelArrayList;
     }
 
     @Override
-    public int getCount() {
-        return sharepointItemModelArrayList.size();
+    public int getViewTypeCount() {
+        return getCount();
     }
-
     @Override
-    public Object getItem(int position) {
-        return sharepointItemModelArrayList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
+    public int getItemViewType(int position) {
         return position;
     }
 
     @Override
+    public int getCount() {
+        return tennisModelArrayList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return tennisModelArrayList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
 
-        // Initialize view holder
-        ViewHolder viewHolder;
+      if (convertView == null) {
+        holder = new ViewHolder();
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView = inflater.inflate(R.layout.lv_player, null, true);
 
-        // Inflate the layout for each list row
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.sharepoint_list_item, parent, false);
-            viewHolder = new ViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
+        holder.tvname = (TextView) convertView.findViewById(R.id.name);
+        holder.tvcity = (TextView) convertView.findViewById(R.id.city);
 
-        // Get current item to be displayed
-        SharepointListItemModel currentItem = (SharepointListItemModel) getItem(position);
+        convertView.setTag(holder);
+      }else {
+          holder = (ViewHolder)convertView.getTag();
+      }
 
-        viewHolder.name.setText(currentItem.getName());
-        viewHolder.description.setText(currentItem.getDescription());
+        holder.tvname.setText(tennisModelArrayList.get(position).getName());
+        holder.tvcity.setText(tennisModelArrayList.get(position).getCity());
 
         return convertView;
     }
-}
 
-class ViewHolder {
-    TextView name;
-    TextView description;
+    private class ViewHolder {
 
-    public ViewHolder(View view) {
-        name = (TextView) view.findViewById(R.id.name);
-        description = (TextView) view.findViewById(R.id.description);
+//      protected TextView tvname, tvcountry;
+//      protected TextView tvname, tvcountry, tvcity;
+        protected TextView tvname, tvcity, tvMobilePlatform, tvServiceLine, tvAppDesc;
+        protected ImageView iv;
     }
+
 }

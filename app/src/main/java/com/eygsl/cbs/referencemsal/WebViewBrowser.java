@@ -50,10 +50,11 @@ public class WebViewBrowser extends AppCompatActivity {
             headerMap.put("Authorization", "Bearer " + internalWebLinkToken);
             mywebView.loadUrl(url, headerMap);
         } else {
-            Log.d("External link", url);
-            HashMap<String, String> headerMap = new HashMap<>();
-            headerMap.put("Authorization", "Bearer " + token);
-            mywebView.loadUrl(url, headerMap);
+//            Log.d("External link", url);
+//            HashMap<String, String> headerMap = new HashMap<>();
+//            headerMap.put("Authorization", "Bearer " + token);
+            Log.d("ExternalLink", url);
+            mywebView.loadUrl(url);
         }
 
         mywebView.setWebViewClient(new WebViewClient(){

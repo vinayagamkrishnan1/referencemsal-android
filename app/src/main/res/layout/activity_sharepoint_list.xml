@@ -1,64 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/activity_main"
+    android:background="#FFFFFF"
     tools:context=".SharepointList">
 
-    <ListView
-        android:id="@+id/sharepoint_list"
+    <include layout="@layout/listviewheader"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"/>
 
-    <TextView
-        android:id="@+id/txt_view_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No Items found."
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include layout="@layout/listviewheader2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:orientation="vertical"-->
-<!--    android:id="@+id/activity_main"-->
-<!--    android:background="#FFFFFF"-->
-<!--    tools:context=".SharepointList">-->
+    <ListView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="610dp"
+        android:layout_marginTop="0dp"></ListView>
 
-<!--    &lt;!&ndash;    <include layout="@layout/listviewheader"&ndash;&gt;-->
-<!--    &lt;!&ndash;      android:layout_width="match_parent"&ndash;&gt;-->
-<!--    &lt;!&ndash;      android:layout_height="40dp"&ndash;&gt;-->
-<!--    &lt;!&ndash;      android:layout_alignParentTop="true"/>&ndash;&gt;-->
-
-<!--    &lt;!&ndash;    <include layout="@layout/listviewheader2"&ndash;&gt;-->
-<!--    &lt;!&ndash;      android:layout_width="match_parent"&ndash;&gt;-->
-<!--    &lt;!&ndash;      android:layout_height="40dp"&ndash;&gt;-->
-<!--    &lt;!&ndash;      android:layout_alignParentTop="true"/>&ndash;&gt;-->
-
-<!--    <ListView-->
-<!--        android:id="@+id/sharepoint_list"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/txt_view_message"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="No Items found."-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--</LinearLayout>-->
+</LinearLayout>

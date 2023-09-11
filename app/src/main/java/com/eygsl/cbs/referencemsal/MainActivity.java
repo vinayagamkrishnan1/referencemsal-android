@@ -88,10 +88,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.microsoft.appcenter.AppCenter;
-import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         OnFragmentInteractionListener {
@@ -123,9 +119,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AppCenter.start(getApplication(), Constants.APPCENTER_APP_SECRET,
-                Analytics.class, Crashes.class);
-
         mEnrollmentManager = MAMComponents.get(MAMEnrollmentManager.class);
 
         mUserAccount = AppSettings.getAccount(getApplicationContext());
@@ -153,31 +146,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void createAlertForTokenExpireAndSignout() {
-        new AlertDialog.Builder(getApplicationContext())
-                .setTitle("Message")
-                .setCancelable(false)
-                .setMessage("Your session got expired, Please login again to continue.")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        signOut();
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-    }
-
-    private boolean isTokenExpired() {
-        long expiredate = sharedPreferences.getLong("GRAPHTOKENEXPIREON", 0);
-        if (expiredate != 0) {
-            Log.d("EXPIRE_DATE", String.valueOf(expiredate));
-            return new Date().getTime() > expiredate;
-        } else {
-            Log.d("EXPIRE_DATE_IS", String.valueOf(0));
-            return false;
-        }
-    }
-
     private void signWithMSAL() {
         // initiate the MSAL authentication on a background thread
         Thread thread = new Thread(new Runnable() {
@@ -192,7 +160,7 @@ public class MainActivity extends AppCompatActivity
                     MSALUtil.acquireToken(MainActivity.this, Constants.MSAL_SCOPES, loginHint, new AuthCallback());
                 } catch (MsalException | InterruptedException e) {
                     Log.d("ERROR_MSAL_AUTH", "ERROR WHILE MSAL AUTHENTICATION");
-                    setSharedPreferencesValue("ERROR", e.getMessage(), "string");
+                    setSharedPreferencesValue("ERROR", e.getMessage());
                     displayErrorPage();
                 }
             }
@@ -216,13 +184,13 @@ public class MainActivity extends AppCompatActivity
 
                 // The user cannot be considered "signed in" at this point, so don't save it to the settings.
                 mUserAccount = new AppAccount(upn, aadid, tenantId, authorityURL);
-                setSharedPreferencesValue("MSAL_SIGNIN_CALLBACK_ERROR1", exc.getMessage(), "string");
+                setSharedPreferencesValue("ERROR", exc.getMessage());
                 displayErrorPage();
             } else if (exc instanceof MsalUserCancelException) {
-                setSharedPreferencesValue("MSAL_SIGNIN_CALLBACK_ERROR2", exc.getMessage(), "string");
+                setSharedPreferencesValue("ERROR", exc.getMessage());
                 displayErrorPage();
             } else {
-                setSharedPreferencesValue("MSAL_SIGNIN_CALLBACK_ERROR3", exc.getMessage(), "string");
+                setSharedPreferencesValue("ERROR", exc.getMessage());
                 displayErrorPage();
             }
         }
@@ -230,8 +198,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onSuccess(final IAuthenticationResult authenticationResult) {
             account = authenticationResult.getAccount();
-            setSharedPreferencesValue("GRAPHACCESSTOKEN", authenticationResult.getAccessToken(), "string");
-            setSharedPreferencesValue("GRAPHTOKENEXPIREON", String.valueOf(authenticationResult.getExpiresOn().getTime()), "long");
+            setSharedPreferencesValue("GRAPHACCESSTOKEN", authenticationResult.getAccessToken());
             final String upn = account.getUsername();
             final String aadId = account.getId();
             final String tenantId = account.getTenantId();
@@ -241,6 +208,9 @@ public class MainActivity extends AppCompatActivity
             Log.d("ACCESS_TOKEN", authenticationResult.getAccessToken());
             Log.d("MSAL_AUTH_ACCOUNT::::::", msg);
 
+
+            Log.d("ACCESS_TOKEN::::", authenticationResult.getAccessToken());
+
             // Save the user account in the settings, since the user is now "signed in".
             mUserAccount = new AppAccount(upn, aadId, tenantId, authorityURL);
             AppSettings.saveAccount(getApplicationContext(), mUserAccount);
@@ -248,7 +218,7 @@ public class MainActivity extends AppCompatActivity
 
             mEnrollmentManager.registerAccountForMAM(upn, aadId, tenantId, authorityURL);
             mSingleAccountApp = MSALUtil.mSingleAccountApp;
-            // getTokenForQA();
+            getTokenForQA();
             callGraphAPI(authenticationResult);
         }
         @Override
@@ -281,13 +251,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void getTokenForQA() {
-        Log.d("SCOPE>>>>>>>>>>", Constants.INTERNAL_WEB_LINK_SCOPE.toString());
-        Log.d("mSINGLEACCOUTNT", mSingleAccountApp.toString());
-        Log.d("AUTHORITY>>>>>>>>>>", mSingleAccountApp.getConfiguration().getDefaultAuthority().getAuthorityURL().toString());
         mSingleAccountApp.acquireTokenSilentAsync(
                 Constants.INTERNAL_WEB_LINK_SCOPE,
                 mSingleAccountApp.getConfiguration().getDefaultAuthority().getAuthorityURL().toString(),
                 getAuthSilentCallback1());
+
 //        MSALUtil.mSingleAccountApp.acquireTokenSilentAsync(
 //                SCOPES,
 //                MSALUtil.mSingleAccountApp.getConfiguration().getDefaultAuthority().getAuthorityURL().toString(),
@@ -303,22 +271,17 @@ public class MainActivity extends AppCompatActivity
                 myEdit.putString("INTERNALWEBLINKTOKEN", authenticationResult.getAccessToken());
                 myEdit.commit();
             }
+
             @Override
             public void onError(MsalException exception) {
                 /* Failed to acquireToken */
                 Log.d(">>>>>>>>>>>>>>>>>CODE", exception.getErrorCode());
                 Log.d(">>>>>>>>>>>>>>>>>MSG", exception.getMessage());
                 if (exception instanceof MsalClientException) {
-                    Log.d("MsalClientException_COD", exception.getErrorCode());
-                    Log.d("MsalClientException_MSG", exception.getMessage());
                     /* Exception inside MSAL, more info inside MsalError.java */
                 } else if (exception instanceof MsalServiceException) {
-                    Log.d("MsalServiceException_C", exception.getErrorCode());
-                    Log.d("MsalServiceException_M", exception.getMessage());
                     /* Exception when communicating with the STS, likely config issue */
                 } else if (exception instanceof MsalUiRequiredException) {
-                    Log.d("MsalUiRequiException_C", exception.getErrorCode());
-                    Log.d("MsalUiRequiException_M", exception.getMessage());
                     /* Tokens expired or no session, retry with interactive */
                 }
             }
@@ -436,7 +399,17 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 if (id == R.id.logout) {
-                    signOut();
+//                    SharedPreferences settings = getSharedPreferences("STORAGE", Context.MODE_PRIVATE);
+//                    settings.edit().clear().commit();
+//                    try {
+//                        MSALUtil.signOutAccount(MainActivity.this, mUserAccount.getAADID());
+//                        MainActivity.this.finish();
+//                        System.exit(0);
+//                    } catch (MsalException e) {
+//                        e.printStackTrace();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
 
                 drawer.removeDrawerListener(this);
@@ -448,23 +421,6 @@ public class MainActivity extends AppCompatActivity
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void signOut() {
-        SharedPreferences settings = getSharedPreferences("STORAGE", Context.MODE_PRIVATE);
-        settings.edit().clear().commit();
-        Log.d("ADDID>>>>>>>>>", mUserAccount.getAADID());
-        Thread thread = new Thread(() -> {
-            try {
-                MSALUtil.signOutAccount(getApplicationContext(), mUserAccount.getAADID());
-            } catch (MsalException | InterruptedException e) {
-                Log.d("LOGOUT_STAUTS:::", "Failed to sign out user " + mUserAccount.getAADID(), e);
-            }
-            mEnrollmentManager.unregisterAccountForMAM(mUserAccount.getUPN());
-            AppSettings.clearAccount(getApplicationContext());
-            mUserAccount = null;
-        });
-        thread.start();
     }
 
     private void setCurrentFragment(final AppFragment newFragment){
@@ -480,7 +436,7 @@ public class MainActivity extends AppCompatActivity
     private void setHeaderString(final AppFragment fragment){
         switch (fragment) {
             case SingleAccount:
-                getSupportActionBar().setTitle(R.string.app_name);
+                getSupportActionBar().setTitle("ReferenceApp MSAL");
                 return;
 
             case MultipleAccount:
@@ -492,11 +448,11 @@ public class MainActivity extends AppCompatActivity
                 return;
 
             case ErrorFragment:
-                getSupportActionBar().setTitle("Test2ReferenceQA Error");
+                getSupportActionBar().setTitle("ReferenceApp MSAL Error");
                 return;
 
             default:
-                getSupportActionBar().setTitle("Test2ReferenceQA");
+                getSupportActionBar().setTitle("ReferenceApp MSAL");
                 return;
         }
     }
@@ -529,12 +485,11 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    private void setSharedPreferencesValue(String key, String value, String type) {
+    private void setSharedPreferencesValue(String key, String value) {
         Log.d("SET_SP>>>>>>>>>>>", value);
-        SharedPreferences.Editor spEdit = sharedPreferences.edit();
-        if (type == "string") { spEdit.putString(key, value); }
-        if (type == "long") { spEdit.putLong(key, Long.parseLong(value)); }
-        spEdit.commit();
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.putString(key, value);
+        myEdit.commit();
     }
 
     private void openCameraAndTakePic() {
